@@ -2,6 +2,7 @@ package com.nhnacademy.student_info.repository;
 
 import com.nhnacademy.student_info.domain.Student;
 import com.nhnacademy.student_info.exception.StudentAlreadyExistsException;
+import com.nhnacademy.student_info.exception.StudentNotFoundException;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
@@ -61,18 +62,20 @@ public class StudentRepositoryImpl implements StudentRepository {
     @Override
     public Student modifyStudent(String id, String password, String name, String email, int score, String evaluation) {
         if (exists(id)) {
-            throw new StudentAlreadyExistsException();
+            Student student = Student.create(id, password);
+            student.setName(name);
+            student.setEmail(email);
+            student.setScore(score);
+            student.setEvaluation(evaluation);
+
+            studentMap.put(id, student);
+
+            return student;
+        } else {
+            throw new StudentNotFoundException();
         }
 
-        Student student = Student.create(id, password);
-        student.setName(name);
-        student.setEmail(email);
-        student.setScore(score);
-        student.setEvaluation(evaluation);
 
-        studentMap.put(id, student);
-
-        return student;
     }
 
 

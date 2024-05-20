@@ -5,7 +5,7 @@
     <title>학생정보수정</title>
 </head>
 <body>
-<form method="post" action="/student/modify/post">
+<form method="post" th:action="'/student/modify/' + ${student.id}">
     아이디: <input type="text" name="id" th:value="${student.id}" /><br />
     비밀번호: <input type="password" name="password"  th:value="${student.password}" /><br />
     이름: <input type="text" name="name"  th:value="${student.name}"/><br />
