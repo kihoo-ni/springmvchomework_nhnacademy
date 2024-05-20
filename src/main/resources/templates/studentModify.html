@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>학생정보수정</title>
+</head>
+<body>
+<form method="post" action="/student/modify/post">
+    아이디: <input type="text" name="id" th:value="${student.id}" /><br />
+    비밀번호: <input type="password" name="password"  th:value="${student.password}" /><br />
+    이름: <input type="text" name="name"  th:value="${student.name}"/><br />
+    이메일: <input type="email" name="email"  th:value="${student.email}"/><br />
+    성적: <input type="text" name="score"  th:value="${student.score}"/><br />
+    평가:  <textarea name="evaluation" rows="10" cols="80"  th:text="${student.evaluation}"></textarea><br />
+    <input type="submit" value="정보수정"/>
+</form>
+</form>
+</body>
+</html>
