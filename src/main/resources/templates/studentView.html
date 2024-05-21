@@ -11,7 +11,7 @@
         이름: <span type="text" name="name"  th:text="${student.name}"></span><br />
         이메일: <span type="email" name="email"  th:text="${student.email}"></span><br />
         성적: <span type="text" name="score"  th:text="${student.score}"></span><br />
-        평가:  <textarea name="evaluation" rows="10" cols="80"  th:text="${student.evaluation}"></textarea><br />
+        평가:  <textarea name="evaluation" rows="10" cols="80"  th:text="${student.evaluation}" readonly></textarea><br />
         <a th:href="'/student/modify/' + ${student.id}">정보수정</a>
 </form>
 </body>
