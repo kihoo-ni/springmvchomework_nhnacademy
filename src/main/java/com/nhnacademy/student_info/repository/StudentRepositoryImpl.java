@@ -34,6 +34,10 @@ public class StudentRepositoryImpl implements StudentRepository {
 
     @Override
     public Student getStudent(String id) {
+        Student student = studentMap.get(id);
+        if (student == null) {
+            throw new StudentNotFoundException();
+        }
         return studentMap.get(id);
     }
 

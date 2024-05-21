@@ -2,9 +2,16 @@ package com.nhnacademy.student_info.controller;
 
 
 import com.nhnacademy.student_info.domain.Student;
-import com.nhnacademy.student_info.domain.StudentRegisterRequest;
+import com.nhnacademy.student_info.domain.StudentModifyRequest;
+import com.nhnacademy.student_info.exception.StudentNotFoundException;
+import com.nhnacademy.student_info.exception.ValidationFailedException;
 import com.nhnacademy.student_info.repository.StudentRepository;
+import com.nhnacademy.student_info.validator.StudentModifyRequestValidator;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -13,11 +20,18 @@ import org.springframework.web.servlet.ModelAndView;
 public class StudentController {
 
     private final StudentRepository studentRepository;
+    private final StudentModifyRequestValidator  studentModifyRequestValidator;
 
-    public StudentController(StudentRepository studentRepository) {
+    public StudentController(StudentRepository studentRepository, StudentModifyRequestValidator studentModifyRequestValidator) {
         this.studentRepository = studentRepository;
+        this.studentModifyRequestValidator = studentModifyRequestValidator;
     }
 
+    @ExceptionHandler({StudentNotFoundException.class})
+    public String handleModifyException(Model model, StudentNotFoundException e){
+        model.addAttribute("error", e);
+        return "error";
+    }
 
     @ModelAttribute("student")
     public Student getStudentPost(@PathVariable(value = "id", required = false) String id) {
@@ -30,15 +44,23 @@ public class StudentController {
     }
 
     @PostMapping("/{id}")
-    public ModelAndView postModify(@ModelAttribute StudentRegisterRequest studentRegisterRequest, @CookieValue(value = "SESSION", required = false) String session) {
-        Student student = studentRepository.modifyStudent(session, studentRegisterRequest.getId(), studentRegisterRequest.getPassword(), studentRegisterRequest.getName(),
-                studentRegisterRequest.getEmail(), studentRegisterRequest.getScore(), studentRegisterRequest.getEvaluation());
+    public ModelAndView postModify(@ModelAttribute @Valid StudentModifyRequest studentModifyRequest, @CookieValue(value = "SESSION", required = false) String session, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            throw new ValidationFailedException(bindingResult);
+        }
+        Student student = studentRepository.modifyStudent(session, studentModifyRequest.getId(), studentModifyRequest.getPassword(), studentModifyRequest.getName(),
+                studentModifyRequest.getEmail(), studentModifyRequest.getScore(), studentModifyRequest.getEvaluation());
 
         ModelAndView mav = new ModelAndView("studentRegister");
         mav.addObject("student", student);
 
 
         return mav;
+    }
+
+    @InitBinder("studentModifyRequest")
+    public void initStudentModifyRequestBinder(WebDataBinder binder) {
+        binder.addValidators(studentModifyRequestValidator);
     }
 
 }

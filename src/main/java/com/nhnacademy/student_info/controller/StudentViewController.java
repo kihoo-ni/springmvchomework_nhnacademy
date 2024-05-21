@@ -2,12 +2,11 @@ package com.nhnacademy.student_info.controller;
 
 
 import com.nhnacademy.student_info.domain.Student;
+import com.nhnacademy.student_info.exception.StudentNotFoundException;
 import com.nhnacademy.student_info.repository.StudentRepository;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/student/view")
@@ -18,7 +17,11 @@ public class StudentViewController {
     public StudentViewController(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
     }
-
+    @ExceptionHandler({StudentNotFoundException.class})
+    public String handleViewException(Model model, StudentNotFoundException e){
+        model.addAttribute("error", e);
+        return "error";
+    }
 
     @ModelAttribute("student")
     public Student getStudentPost(@PathVariable("id") String id){
