@@ -19,11 +19,8 @@ public class StudentController {
     }
 
 
-
-
-
     @ModelAttribute("student")
-    public Student getStudentPost(@PathVariable(value = "id", required = false)String id){
+    public Student getStudentPost(@PathVariable(value = "id", required = false) String id) {
         return studentRepository.getStudent(id);
     }
 
@@ -33,15 +30,13 @@ public class StudentController {
     }
 
     @PostMapping("/{id}")
-    public ModelAndView postModify(@ModelAttribute StudentRegisterRequest studentRegisterRequest) {
-        Student student = studentRepository.modifyStudent(studentRegisterRequest.getId(), studentRegisterRequest.getPassword(), studentRegisterRequest.getName(),
+    public ModelAndView postModify(@ModelAttribute StudentRegisterRequest studentRegisterRequest, @CookieValue(value = "SESSION", required = false) String session) {
+        Student student = studentRepository.modifyStudent(session, studentRegisterRequest.getId(), studentRegisterRequest.getPassword(), studentRegisterRequest.getName(),
                 studentRegisterRequest.getEmail(), studentRegisterRequest.getScore(), studentRegisterRequest.getEvaluation());
 
-//        ModelAndView mav = new ModelAndView("redirect:/student/modify/" + student.getId());
-        ModelAndView mav = new ModelAndView("redirect:/student/register");
-    mav.addObject("student", student);
-// register에 student줬는데 왜... 못받는건지 ㅠㅠ
-        // @PathVariable 안해도되는건지.?
+        ModelAndView mav = new ModelAndView("studentRegister");
+        mav.addObject("student", student);
+
 
         return mav;
     }

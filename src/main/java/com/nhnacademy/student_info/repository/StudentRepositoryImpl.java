@@ -60,8 +60,8 @@ public class StudentRepositoryImpl implements StudentRepository {
     }
 
     @Override
-    public Student modifyStudent(String id, String password, String name, String email, int score, String evaluation) {
-        if (exists(id)) {
+    public Student modifyStudent(String session,String id, String password, String name, String email, int score, String evaluation) {
+        if (exists(session)) {
             Student student = Student.create(id, password);
             student.setName(name);
             student.setEmail(email);

@@ -10,7 +10,7 @@ public interface StudentRepository {
     List<Student> getStudents();
     Student getStudent(String id);
     void addStudent(Student student);
-    Student modifyStudent(String id, String password, String name, String email, int score, String evaluation);
+    Student modifyStudent(String session, String id, String password, String name, String email, int score, String evaluation);
     Student addStudent(String id, String password, String name, String email, int score, String evaluation);
 
 
