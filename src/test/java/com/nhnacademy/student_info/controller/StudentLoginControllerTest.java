@@ -27,8 +27,11 @@ class StudentLoginControllerTest {
 
     private StudentRepository studentRepository;
 
+    private Cookie cookie;
+
     @BeforeEach
     void setUp() {
+        cookie = new Cookie("SESSION", "1234");
          studentRepository = mock(StudentRepository.class);
         mockMvc = MockMvcBuilders.standaloneSetup(new StudentLoginController(studentRepository))
                 .build();
@@ -103,7 +106,8 @@ class StudentLoginControllerTest {
     @Test
     void logout() throws Exception {
         HttpServletResponse response = mock(HttpServletResponse.class);
-        mockMvc.perform(get("/logout"))
+        mockMvc.perform(get("/logout")
+                        .cookie(cookie))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/login"))
                 .andExpect(cookie().value("SESSION", (String) null));

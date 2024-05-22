@@ -2,6 +2,7 @@ package com.nhnacademy.student_info.controller;
 
 import com.nhnacademy.student_info.domain.Student;
 import com.nhnacademy.student_info.repository.StudentRepository;
+import jakarta.servlet.http.Cookie;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -30,10 +31,12 @@ class StudentViewControllerTest {
 
     private StudentRepository studentRepository;
 
+    private Cookie cookie;
 
     @BeforeEach
     void setUp() {
         studentRepository = mock(StudentRepository.class);
+        cookie = new Cookie("SESSION", "1234");
 
         mockMvc = MockMvcBuilders.standaloneSetup(new StudentViewController(studentRepository)).build();
 
@@ -52,6 +55,7 @@ class StudentViewControllerTest {
         when(studentRepository.getStudent(anyString())).thenReturn(student);
 
         MvcResult mvcResult = mockMvc.perform(get("/student/view/{id}", "1234")
+                        .cookie(cookie)
                         .param("hideScore", "no"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("studentView"))
@@ -80,6 +84,7 @@ class StudentViewControllerTest {
         when(studentRepository.getStudent(anyString())).thenReturn(student);
 
         MvcResult mvcResult = mockMvc.perform(get("/student/view/{id}", "1234")
+                        .cookie(cookie)
                         .param("hideScore", "yes"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("studentViewHideScore"))
