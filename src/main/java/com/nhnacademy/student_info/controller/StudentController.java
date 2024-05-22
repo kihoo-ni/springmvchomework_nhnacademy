@@ -44,7 +44,7 @@ public class StudentController {
     }
 
     @PostMapping("/{id}")
-    public ModelAndView postModify(@ModelAttribute @Valid StudentModifyRequest studentModifyRequest, @CookieValue(value = "SESSION", required = false) String session, BindingResult bindingResult) {
+    public ModelAndView postModify(@ModelAttribute @Valid StudentModifyRequest studentModifyRequest,  BindingResult bindingResult, @CookieValue(value = "SESSION", required = false) String session) {
         if (bindingResult.hasErrors()) {
             throw new ValidationFailedException(bindingResult);
         }

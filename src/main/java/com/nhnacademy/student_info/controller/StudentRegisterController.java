@@ -32,13 +32,17 @@ public class StudentRegisterController {
         return "error";
     }
 
+
+
+
+
     @GetMapping
     public String userRegisterForm() {
         return "studentRegister";
     }
 
     @PostMapping
-    public String registerUser(@ModelAttribute @Valid StudentRegisterRequest studentRegisterRequest, ModelMap modelMap, BindingResult bindingResult) {
+    public String registerUser(@ModelAttribute @Valid StudentRegisterRequest studentRegisterRequest,  BindingResult bindingResult,ModelMap modelMap) {
         if (bindingResult.hasErrors()) {
             throw new ValidationFailedException(bindingResult);
         }
