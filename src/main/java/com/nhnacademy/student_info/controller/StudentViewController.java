@@ -17,6 +17,7 @@ public class StudentViewController {
     public StudentViewController(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
     }
+
     @ExceptionHandler({StudentNotFoundException.class})
     public String handleViewException(Model model, StudentNotFoundException e){
         model.addAttribute("error", e);
@@ -30,7 +31,7 @@ public class StudentViewController {
     }
 
     @GetMapping("/{id}")
-    public String getStudentView(@ModelAttribute("student") Student student) {
+    public String getStudentView(@ModelAttribute("student") Student student) {// modelattribute 안줘도 인식함
         return "studentView";
     }
 

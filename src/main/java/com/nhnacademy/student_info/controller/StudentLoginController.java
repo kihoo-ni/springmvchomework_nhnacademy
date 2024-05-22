@@ -51,5 +51,15 @@ public class StudentLoginController {
         } else {
             return "redirect:/login";
         }
+
+    }
+    @GetMapping("logout")
+    public String logout(HttpServletResponse response) {
+        Cookie cookie = new Cookie("SESSION", null);
+        cookie.setMaxAge(0);
+        cookie.setPath("/");
+        response.addCookie(cookie);
+
+        return "redirect:/login";
     }
 }

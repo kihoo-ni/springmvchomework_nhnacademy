@@ -1,6 +1,7 @@
 package com.nhnacademy.student_info.configuration;
 
 
+import com.nhnacademy.student_info.interceptor.StudentLoginInterceptor;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -36,5 +37,8 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new LocaleChangeInterceptor());
+        registry.addInterceptor(new StudentLoginInterceptor()).order(1)
+                .addPathPatterns("/**")
+                .excludePathPatterns("/login", "/postlogin", "/logout", "/student/register");;
     }
 }
