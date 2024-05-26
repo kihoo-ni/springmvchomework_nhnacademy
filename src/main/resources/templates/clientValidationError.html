@@ -6,9 +6,8 @@
 </head>
 <body>
 <h1>유효하지 않은 값이 들어가서 에러가 발생했습니다.</h1>
-<ul  th:if="${error}" >
-    <li th:text="${error.errorCode}"></li>
-    <li th:text="${error.defaultMessage}"></li>
+<ul  th:if="${error !=null}" >
+    <li th:text="${error}"></li>
 </ul>
 
 <a href="/client/login">메인으로</a>

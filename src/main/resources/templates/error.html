@@ -7,7 +7,7 @@
 <body>
 <h1>통합에러가 발생했습니다.</h1>
 <ul>
-    <li th:if="${error}">
+    <li th:if="${error !=null}">
         <p th:text="${error}"></p>
     </li>
 </ul>

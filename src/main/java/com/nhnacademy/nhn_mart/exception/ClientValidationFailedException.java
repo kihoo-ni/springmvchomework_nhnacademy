@@ -8,7 +8,7 @@ public class ClientValidationFailedException extends RuntimeException {
     public ClientValidationFailedException(BindingResult bindingResult) {
         super(bindingResult.getAllErrors()
                 .stream()
-                .map(error -> new StringBuilder().append("필드값=").append(error.getObjectName())
+                .map(error -> new StringBuilder().append("밸리데이션이름=").append(error.getObjectName())
                         .append(",메시지=").append(error.getDefaultMessage())
                         .append(",오류코드=").append(error.getCode()))
                 .collect(Collectors.joining(" | ")));
