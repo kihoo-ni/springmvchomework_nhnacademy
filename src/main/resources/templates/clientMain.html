@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>고객페이지 메인</title>
+</head>
+<body>
+<h1><span th:text="${client.name}"></span>회원님 고객센터에 오신걸 환영합니다.</h1>
+<h3> <a href="/client/logout">로그아웃</a></h3>
+<h3>문의사항목록</h3>
+<div th:if="${clientInquiry != null}">
+    <ul th:each="inquiry : ${clientInquiry}">
+        <li>
+            <p>제목: <a th:href="@{'/client/inquiry/view/' + ${inquiry.clientId} + '/' + ${inquiry.inquiryNum}}" th:text="${inquiry.title}"></a>, 분류: <span th:text="${inquiry.category}"></span>
+                , 답변여부: <span th:text="${inquiry.isAnswered} ? '답변완료' : '미답변'"></span>, 답변일시: <span th:text="${inquiry.createdDate}"></span>
+            </p>
+        </li>
+    </ul>
+</div>
+<div>
+    <!--검색기능-->
+    <form id="categorySearchForm" action="/client/inquiry/search" method="get">
+        <label for="category">분류 선택:</label>
+        <input type="hidden" th:name="id" th:value="${client.id}"/>
+        <select id="category" name="category" required>
+            <option value="" disabled selected>분류를 선택하세요</option>
+            <option value="불만접수">불만접수</option>
+            <option value="제안">제안</option>
+            <option value="환불/교환">환불/교환</option>
+            <option value="칭찬해요">칭찬해요</option>
+            <option value="기타문의">기타문의</option>
+        </select>
+        <button type="submit">검색</button>
+    </form>
+</div>
+<button><a href="/client/inquiry/post">문의등록</a></button>
+</body>

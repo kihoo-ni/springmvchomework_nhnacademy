@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>매니저페이지 메인</title>
+</head>
+<body>
+<h1><span th:text="${csManager.name}"></span>회원님 고객센터에 오신걸 환영합니다.</h1>
+<h3> <a href="/csManager/logout">로그아웃</a></h3>
+<h3>문의사항목록</h3>
+<div th:if="${clientInquiries != null}">
+    <ul th:each="inquiry : ${clientInquiries}">
+        <li th:if="${inquiry.isAnswered eq false}">
+            <p>제목: <a th:href="@{'/csManager/answer/view/' + ${inquiry.clientId} + '/' + ${inquiry.inquiryNum}}" th:text="${inquiry.title}"></a>, 분류: <span th:text="${inquiry.category}"></span>
+                , 답변여부: <span th:text="${inquiry.isAnswered} ? '답변완료' : '미답변'"></span>, 답변일시: <span th:text="${inquiry.createdDate}"></span>
+            </p>
+        </li>
+    </ul>
+</div>
+</body>

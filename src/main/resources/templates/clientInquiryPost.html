@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>문의등록</title>
+</head>
+<body>
+<h1>문의하기</h1>
+
+<form action="/client/inquiry/post" method="post" enctype="multipart/form-data">
+    <div>
+        <label for="title">제목:</label>
+        <input type="text" id="title" name="title" required>
+    </div>
+    <div>
+        <label for="category">분류:</label>
+        <select id="category" name="category" required>
+            <option value="" disabled selected>Select category</option>
+            <option value="불만접수">불만접수</option>
+            <option value="제안">제안</option>
+            <option value="환불/교환">환불/교환</option>
+            <option value="칭찬해요">칭찬해요</option>
+            <option value="기타문의">기타문의</option>
+        </select>
+    </div>
+    <div>
+        <label for="content">내용:</label>
+        <textarea id="content" name="content" rows="5" required></textarea>
+    </div>
+    <div>
+        <label for="imageFiles">파일업로드:</label>
+        <input type="file" id="imageFiles" name="imageFiles" multiple accept=".jpg,.gif,.jpeg,.png">
+        <p>파일첨부, 최대 9개까지 첨부가능하게 다량파일첨부</p>
+    </div>
+    <button type="submit">문의등록</button>
+    <button><a th:href="@{/client/inquiry/main/{id}(id=${id})}">취소</a></button>
+</form>
+</body>
+</html>

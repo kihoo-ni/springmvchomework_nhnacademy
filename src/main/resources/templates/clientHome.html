@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>고객로그인</title>
+</head>
+<body>
+<h3 th:text="${error}"></h3>
+<form action="/client/login" method="post">
+    <label for="userId">아이디:</label>
+    <input type="text" id="userId" name="id">
+    <label for="password">비밀번호:</label>
+    <input type="password" id="password" name="password">
+    <button type="submit">Login</button>
+</form>
+</body>
+</html>
